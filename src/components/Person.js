@@ -1,21 +1,10 @@
+//Functional imports
 import React, { Component } from 'react'
 import PersonDisplay from './PersonDisplay'
-import './Person.css'
-import styled from 'styled-components'
 
-const StyledButton = styled.button`
-    background-color: ${props => props.alt ? 'red' : 'green'};
-    color: white;
-    font: inherit;
-    border: 3px solid blue;
-    padding: 8px;
-    cursor: pointer;
+//Styling imports
+import classes from './Person.module.css'
 
-    &:hover {
-        background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-        color: black;
-    }
-`;
 class Person extends Component {
     state = {
         persons: [
@@ -59,21 +48,10 @@ class Person extends Component {
     }
 
     render() {
-        const style = {
-            backgroundColor: 'green',
-            color: 'white',
-            font: 'inherit',
-            border: '3px solid blue',
-            padding: '8px',
-            cursor: 'pointer',
-            ':hover': {
-                backgroundColor: 'lightgreen',
-                color: 'black'
-            }
-        };
-        
+
         let persons = null;
         let personsList = this.state.persons;
+        let btnClass = [classes.Button];
 
         if (this.state.showPersons) {
             persons = (
@@ -90,29 +68,25 @@ class Person extends Component {
                 </div> 
             );
 
-/*          style.backgroundColor = 'red';
-            style[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'black'
-            } */
+            btnClass.push(classes.Red);
         }
 
-        const classes = []
+        const assignedClasses = []
 
         if (personsList.length <= 2) {
-            classes.push('red'); //classes = ['red']
+            assignedClasses.push(classes.red); //assignedClasses = ['red']
         }
 
         if (personsList.length <= 1) {
-            classes.push('bold'); //classes = ['red', 'bold']
+            assignedClasses.push(classes.bold); //assignedClasses = ['red', 'bold']
         }
 
         return (
             <div>
-                <p className={classes.join(' ')}>Assigning classnames dinamically</p>
-                <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>
+                <p className={assignedClasses.join(' ')}>Assigning classnames dinamically</p>
+                <button className={btnClass.join(' ')} onClick={this.togglePersonsHandler}>
                     Mostrar personas
-                </StyledButton>
+                </button>
                 {persons}
             </div>
         )
