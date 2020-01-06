@@ -30,7 +30,7 @@
 }
 
 .Button.Red {
-    ground-color: red;
+    background-color: rgb(172, 47, 47);
 }
 
 .Button.Red:hover {
