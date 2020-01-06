@@ -1,6 +1,21 @@
 import React, { Component } from 'react'
 import PersonDisplay from './PersonDisplay'
+import './Person.css'
+import styled from 'styled-components'
 
+const StyledButton = styled.button`
+    background-color: ${props => props.alt ? 'red' : 'green'};
+    color: white;
+    font: inherit;
+    border: 3px solid blue;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+        color: black;
+    }
+`;
 class Person extends Component {
     state = {
         persons: [
@@ -45,12 +60,16 @@ class Person extends Component {
 
     render() {
         const style = {
-            backgroundColor: 'blue',
+            backgroundColor: 'green',
+            color: 'white',
             font: 'inherit',
             border: '3px solid blue',
             padding: '8px',
-            color: 'white',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            ':hover': {
+                backgroundColor: 'lightgreen',
+                color: 'black'
+            }
         };
         
         let persons = null;
@@ -70,10 +89,30 @@ class Person extends Component {
                     })}
                 </div> 
             );
+
+/*          style.backgroundColor = 'red';
+            style[':hover'] = {
+                backgroundColor: 'salmon',
+                color: 'black'
+            } */
         }
+
+        const classes = []
+
+        if (personsList.length <= 2) {
+            classes.push('red'); //classes = ['red']
+        }
+
+        if (personsList.length <= 1) {
+            classes.push('bold'); //classes = ['red', 'bold']
+        }
+
         return (
             <div>
-                <button style={style} onClick={this.togglePersonsHandler}>Mostrar personas</button>
+                <p className={classes.join(' ')}>Assigning classnames dinamically</p>
+                <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>
+                    Mostrar personas
+                </StyledButton>
                 {persons}
             </div>
         )
