@@ -1,9 +1,11 @@
 //Functional imports
 import React, { Component } from 'react'
 import PersonDisplay from './PersonDisplay'
+import ErrorBoundary from './Errors/ErrorBoundary'
 
 //Styling imports
 import classes from './Person.module.css'
+
 
 class Person extends Component {
     state = {
@@ -57,13 +59,13 @@ class Person extends Component {
             persons = (
                 <div>
                     {personsList.map((person, index) => {
-                        return <PersonDisplay
+                        return <ErrorBoundary key={person.id}>
+                            <PersonDisplay
                                     click={() => this.deletePersonHandler(index)} 
                                     name={person.name} 
                                     age={person.age} 
-                                    key={person.id}
-                                    changed={(event) => this.nameChangedHandler(event, person.id)}
-                                />
+                                    changed={(event) => this.nameChangedHandler(event, person.id)}/>
+                            </ErrorBoundary>
                     })}
                 </div> 
             );
