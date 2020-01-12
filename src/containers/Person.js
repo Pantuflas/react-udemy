@@ -1,9 +1,9 @@
 //Functional imports
 import React, { Component } from 'react'
-import PersonDisplay from './PersonDisplay'
 
 //Styling imports
-import classes from './Person.module.css'
+import PersonsList from '../components/persons/PersonsList'
+import Cockpit from '../components/Cockpit/Cockpit'
 
 class Person extends Component {
     state = {
@@ -50,43 +50,20 @@ class Person extends Component {
     render() {
 
         let persons = null;
-        let personsList = this.state.persons;
-        let btnClass = [classes.Button];
 
         if (this.state.showPersons) {
-            persons = (
-                <div>
-                    {personsList.map((person, index) => {
-                        return <PersonDisplay
-                                    click={() => this.deletePersonHandler(index)} 
-                                    name={person.name} 
-                                    age={person.age} 
-                                    key={person.id}
-                                    changed={(event) => this.nameChangedHandler(event, person.id)}
-                                />
-                    })}
-                </div> 
-            );
-
-            btnClass.push(classes.Red);
-        }
-
-        const assignedClasses = []
-
-        if (personsList.length <= 2) {
-            assignedClasses.push(classes.red); //assignedClasses = ['red']
-        }
-
-        if (personsList.length <= 1) {
-            assignedClasses.push(classes.bold); //assignedClasses = ['red', 'bold']
+            persons = <PersonsList 
+                        persons={this.state.persons} 
+                        clicked={this.deletePersonHandler} 
+                        changed={this.nameChangedHandler}/>;
         }
 
         return (
             <div>
-                <p className={assignedClasses.join(' ')}>Assigning classnames dinamically</p>
-                <button className={btnClass.join(' ')} onClick={this.togglePersonsHandler}>
-                    Mostrar personas
-                </button>
+                <Cockpit
+                    showPersons={this.state.showPersons}
+                    persons={this.state.persons}
+                    clicked={this.togglePersonsHandler} />
                 {persons}
             </div>
         )
